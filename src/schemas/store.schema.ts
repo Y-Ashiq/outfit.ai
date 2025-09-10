@@ -23,4 +23,3 @@ export const StoreSchema = SchemaFactory.createForClass(Store);
 export const StoreModel = MongooseModule.forFeature([
   { name: Store.name, schema: StoreSchema },
 ]);
-export type StoreDocument = HydratedDocument<Store>;

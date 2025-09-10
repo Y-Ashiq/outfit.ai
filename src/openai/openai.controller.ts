@@ -6,9 +6,5 @@ export class OpenaiController {
   constructor(private readonly openaiService: OpenaiService) {}
 
 
-  @Get()
 
-  outfitDescription(){
-    return this.openaiService.outfitDescription()
-  }
 }

@@ -1,5 +1,5 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import {  Types } from 'mongoose';
 import { Store } from './store.schema';
 
 @Schema({ timestamps: true })
@@ -19,8 +19,8 @@ export class Item {
   @Prop()
   price?: number;
 
-  @Prop([{ type: String }])
-  imageUrls?: string[]; 
+  @Prop({ type: String })
+  imageUrls?: string; 
 
   @Prop({ type: [Number], required: true })
   embedding: number[]; 
@@ -32,4 +32,3 @@ export const ItemModel = MongooseModule.forFeature([
   { name: Item.name, schema: ItemSchema },
 ]);
 
-export type ItemDocument = HydratedDocument<Item>;
