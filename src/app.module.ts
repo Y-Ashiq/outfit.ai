@@ -6,6 +6,7 @@ import { OpenaiModule } from './openai/openai.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { StoresModule } from './stores/stores.module';
 import { ItemsModule } from './items/items.module';
+import { MongoDbModule } from './mongo-db/mongo-db.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ItemsModule } from './items/items.module';
     OpenaiModule,
     StoresModule,
     ItemsModule,
+    MongoDbModule,
   ],
   controllers: [AppController],
   providers: [AppService],

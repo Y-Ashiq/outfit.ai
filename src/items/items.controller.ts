@@ -8,7 +8,6 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -21,14 +20,20 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file',multerOptions))
+  @UseInterceptors(FileInterceptor('file', multerOptions))
   create(
     @UploadedFile() file: Express.Multer.File,
     @Body() createItemDto: CreateItemDto,
   ) {
-        console.log("here");
 
-    return this.itemsService.create(file,createItemDto);
+    return this.itemsService.create(file, createItemDto);
+  }
+
+  @Post('get-similar')
+  @UseInterceptors(FileInterceptor('file', multerOptions))
+  searchSimilarItems(@UploadedFile() file: Express.Multer.File) {
+
+    return this.itemsService.searchSimilarItems(file)
   }
 
   @Get()

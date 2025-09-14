@@ -7,7 +7,7 @@ export class OpenaiService {
     apiKey: process.env.OPENAI_KEY,
   });
 
-  async outfitDescription(url:string) {
+  async outfitDescription(url: string) {
     const prompt: String =
       'Generate a concise description of the visible outfit (clothing items, colors, style). If the person is not wearing clothes or no outfit is clearly visible, respond with: "No outfit detected." Avoid mentioning identity or background.';
     const response = await this.openai.responses.create({

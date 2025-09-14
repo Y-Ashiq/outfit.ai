@@ -3,10 +3,11 @@ import { ItemsService } from './items.service';
 import { ItemsController } from './items.controller';
 import { OpenaiService } from 'src/openai/openai.service';
 import { ItemModel } from 'src/schemas/item.schema';
+import { MongoDbService } from 'src/mongo-db/mongo-db.service';
 
 @Module({
   imports:[ItemModel],
   controllers: [ItemsController],
-  providers: [ItemsService,OpenaiService],
+  providers: [ItemsService,OpenaiService,MongoDbService],
 })
 export class ItemsModule {}
