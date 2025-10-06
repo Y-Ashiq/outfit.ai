@@ -1,98 +1,91 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Outfit AI - AI-Powered Outfit Finder
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Designed an AI-powered Outfit Finder using OpenAI embeddings and vector search to deliver visually similar outfit recommendations.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Overview
 
-## Description
+Outfit AI is a sophisticated backend service that leverages artificial intelligence to analyze outfit images and provide intelligent recommendations. The system uses computer vision to understand clothing items and their visual characteristics, then employs vector similarity search to find matching or complementary outfits from a curated database.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technology Stack
 
-## Project setup
+### Core Technologies
 
-```bash
-$ npm install
-```
+- **NestJS** - Modern Node.js framework for building scalable server-side applications
+- **TypeScript** - Type-safe JavaScript for enhanced development experience
+- **MongoDB Atlas** - Cloud database with vector search capabilities
+- **Mongoose** - MongoDB object modeling for Node.js
 
-## Compile and run the project
+### AI & Machine Learning
 
-```bash
-# development
-$ npm run start
+- **OpenAI API** - GPT-4 Vision for image analysis and outfit description generation
+- **OpenAI Embeddings** - Text embedding generation using `text-embedding-3-small` model
+- **MongoDB Vector Search** - Vector similarity search for outfit recommendations
 
-# watch mode
-$ npm run start:dev
+### Additional Services
 
-# production mode
-$ npm run start:prod
-```
+- **ImageKit** - Image optimization and CDN service
+- **Multer** - File upload handling for images
 
-## Run tests
+## Architecture
 
-```bash
-# unit tests
-$ npm run test
+The application follows a modular architecture with the following key components:
 
-# e2e tests
-$ npm run test:e2e
+### Core Modules
 
-# test coverage
-$ npm run test:cov
-```
+- **OpenAI Module** - Handles AI-powered image analysis and embedding generation
+- **Items Module** - Manages clothing items with vector embeddings
+- **Stores Module** - Manages store information and metadata
+- **MongoDB Module** - Database connection and configuration
 
-## Deployment
+### Data Models
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- **Item Schema** - Stores clothing items with embeddings, metadata, and store references
+- **Store Schema** - Manages store information, categories, and links
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Features
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+- **AI-Powered Image Analysis** - Uses GPT-4 Vision to analyze outfit images and generate detailed descriptions
+- **Vector Embeddings** - Converts outfit descriptions into high-dimensional vectors for similarity matching
+- **Vector Search** - MongoDB Atlas vector search for finding visually similar outfits
+- **Store Management** - Complete CRUD operations for managing clothing stores
+- **Item Management** - Full item lifecycle management with embedding storage
+- **Image Processing** - Integrated image upload and optimization via ImageKit
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Getting Started
 
-## Resources
+## API Endpoints
 
-Check out a few resources that may come in handy when working with NestJS:
+### Items
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- `POST /items` - Create new clothing item with embedding
+- `GET /items` - Retrieve all items
+- `GET /items/:id` - Get specific item
+- `PUT /items/:id` - Update item
+- `DELETE /items/:id` - Delete item
 
-## Support
+### Stores
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- `POST /stores` - Create new store
+- `GET /stores` - Retrieve all stores
+- `GET /stores/:id` - Get specific store
+- `PUT /stores/:id` - Update store
+- `DELETE /stores/:id` - Delete store
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## How It Works
 
-## License
+1. **Image Upload** - Users upload outfit images
+2. **AI Analysis** - GPT-4 Vision analyzes the image and generates a detailed description
+3. **Embedding Generation** - The description is converted to a vector embedding using OpenAI's embedding model
+4. **Vector Storage** - Embeddings are stored in MongoDB Atlas with vector search capabilities
+5. **Similarity Search** - When searching for similar outfits, the system performs vector similarity search to find visually similar items
+6. **Recommendations** - Results are ranked by similarity and returned to the user
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## Future Enhancements
+
+- Real-time outfit recommendations
+- Style preference learning
+- Integration with e-commerce platforms
+- Mobile app support
+- Advanced filtering and search capabilities

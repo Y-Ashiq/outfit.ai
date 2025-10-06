@@ -9,7 +9,7 @@ export class OpenaiService {
 
   async outfitDescription(url: string) {
     const prompt: String =
-      'Generate a concise description of the visible outfit (clothing items, colors, style). If the person is not wearing clothes or no outfit is clearly visible, respond with: "No outfit detected." Avoid mentioning identity or background.';
+      'Generate a concise description of the visible outfit (clothing , colors, style). If the person is not wearing clothes or no outfit is clearly visible, respond with: "No outfit detected." Avoid mentioning identity or background.';
     const response = await this.openai.responses.create({
       model: 'gpt-4.1-mini',
       input: [

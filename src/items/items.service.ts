@@ -68,6 +68,11 @@ export class ItemsService {
           },
         },
         {
+          $project: {
+            embedding: 0,
+          },
+        },
+        {
           $lookup: {
             from: 'stores',
             localField: 'store', // field in current collection

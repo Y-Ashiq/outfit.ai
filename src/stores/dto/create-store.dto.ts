@@ -5,10 +5,6 @@ export class CreateStoreDto {
   name: string;
 
   @IsOptional()
-  @IsString()
-  description?: string;
-
-  @IsOptional()
   @IsArray()
   links?: { type: string; url: string }[];
 
