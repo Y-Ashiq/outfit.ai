@@ -8,11 +8,8 @@ export class Store {
   @Prop([{ type: Object }])
   links?: { type: string; url: string }[];
 
-  @Prop()
-  location?: string;
 
-  @Prop([String])
-  categories?: string[];
+
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);

@@ -4,6 +4,7 @@ import { UpdateStoreDto } from './dto/update-store.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Store } from 'src/schemas/store.schema';
 import { Model } from 'mongoose';
+import { FindById } from './dto/findID-store.dto';
 
 @Injectable()
 export class StoresService {
@@ -17,7 +18,7 @@ export class StoresService {
     return await this.storeModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Store | null> {
+  async findOne(id: FindById): Promise<Store | null> {
     return await this.storeModel.findById(id).exec();
   }
 

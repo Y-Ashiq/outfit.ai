@@ -8,11 +8,4 @@ export class CreateStoreDto {
   @IsArray()
   links?: { type: string; url: string }[];
 
-  @IsOptional()
-  @IsString()
-  location?: string;
-
-  @IsOptional()
-  @IsArray()
-  categories?: string[];
 }
