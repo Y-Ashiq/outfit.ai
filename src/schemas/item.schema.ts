@@ -7,8 +7,8 @@ export class Item {
   @Prop({ type: Types.ObjectId, ref: Store.name, required: true })
   store: Types.ObjectId;
 
-  @Prop({ required: true })
-  name: string;
+  @Prop()
+  name?: string;
 
   @Prop()
   description?: string;

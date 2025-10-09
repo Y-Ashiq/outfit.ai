@@ -4,11 +4,12 @@ import { Types } from 'mongoose';
 
 export class CreateItemDto {
   @IsMongoId()
-  @Transform(({ value }) => Types.ObjectId.createFromHexString(value))
+@Transform(({ value }) => (Types.ObjectId.isValid(value) ? value : null)) // Ensure valid ObjectId
   store: Types.ObjectId;
 
+  @IsOptional()
   @IsString()
-  name: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
@@ -32,7 +33,7 @@ export class CreateItemDto {
   embedding?: number[];
   
 
-  @IsOptional()
-  @IsString()
-  image?: string;
+  // @IsOptional()
+  // @IsString()
+  // image?: string;
 }

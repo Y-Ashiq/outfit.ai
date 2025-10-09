@@ -26,15 +26,13 @@ export class ItemsController {
     @UploadedFile() file: Express.Multer.File,
     @Body() createItemDto: CreateItemDto,
   ) {
-
     return this.itemsService.create(file, createItemDto);
   }
 
   @Post('get-similar')
   @UseInterceptors(FileInterceptor('file', multerOptions))
   searchSimilarItems(@UploadedFile() file: Express.Multer.File) {
-
-    return this.itemsService.searchSimilarItems(file)
+    return this.itemsService.searchSimilarItems(file);
   }
 
   @Get()
