@@ -14,6 +14,7 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/util/multerOptions';
+import { FindById } from './dto/findID-item.dto';
 
 @Controller('items')
 export class ItemsController {
@@ -42,17 +43,17 @@ export class ItemsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.itemsService.findOne(+id);
+  findOne(@Param() params: FindById) {
+    return this.itemsService.findOne(params.id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateItemDto: UpdateItemDto) {
-    return this.itemsService.update(+id, updateItemDto);
+  update(@Param() params: FindById, @Body() updateItemDto: UpdateItemDto) {
+    return this.itemsService.update(params.id, updateItemDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.itemsService.remove(+id);
+  remove(@Param() params: FindById) {
+    return this.itemsService.remove(params.id);
   }
 }

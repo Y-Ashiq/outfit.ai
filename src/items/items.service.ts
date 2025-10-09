@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { OpenaiService } from 'src/openai/openai.service';
@@ -8,8 +7,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Item } from 'src/schemas/item.schema';
 import { Model } from 'mongoose';
 import { MongoDbService } from 'src/mongo-db/mongo-db.service';
-import * as fs from 'fs';
-import * as path from 'path';
+// import * as fs from 'fs';
+// import * as path from 'path';
 
 @Injectable()
 export class ItemsService {
@@ -89,18 +88,18 @@ export class ItemsService {
   }
 
   findAll() {
-    return `This action returns all items`;
+    return this.itemModel.find().populate('store').exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} item`;
+  findOne(id: string) {
+    return this.itemModel.findById(id).populate('store').exec();
   }
 
-  update(id: number, updateItemDto: UpdateItemDto) {
-    return `This action updates a #${id} item`;
+  update(id: string, updateItemDto: UpdateItemDto) {
+    return this.itemModel.findByIdAndUpdate(id, updateItemDto, { new: true }).populate('store').exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} item`;
+  remove(id: string) {
+    return this.itemModel.findByIdAndDelete(id).exec();
   }
 }

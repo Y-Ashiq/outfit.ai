@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { StoresService } from './stores.service';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
+import { FindById } from './dto/findID-store.dto';
 
 @Controller('stores')
 export class StoresController {
@@ -18,17 +19,18 @@ export class StoresController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storesService.findOne(id);
+  findOne(@Param() params: FindById) {
+    
+    return this.storesService.findOne(params.id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storesService.update(id, updateStoreDto);
+  update(@Param() params: FindById, @Body() updateStoreDto: UpdateStoreDto) {
+    return this.storesService.update(params.id, updateStoreDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storesService.remove(id);
+  remove(@Param() params: FindById) {
+    return this.storesService.remove(params.id);
   }
 }

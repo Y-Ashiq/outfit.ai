@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Store } from 'src/schemas/store.schema';
 import { Model } from 'mongoose';
-import { FindById } from './dto/findID-store.dto';
 
 @Injectable()
 export class StoresService {
@@ -18,20 +17,33 @@ export class StoresService {
     return await this.storeModel.find().exec();
   }
 
-  async findOne(id: FindById): Promise<Store | null> {
-    return await this.storeModel.findById(id).exec();
+  async findOne(id: string): Promise<Store | null> {
+    const store = await this.storeModel.findById(id).exec();
+
+    if (!store) {
+      throw new NotFoundException(`Store with id '${id}' not found`);
+    }
+    return store;
   }
 
   async update(
     id: string,
     updateStoreDto: UpdateStoreDto,
   ): Promise<Store | null> {
-    return await this.storeModel
+    const store = await this.storeModel
       .findByIdAndUpdate(id, updateStoreDto, { new: true })
       .exec();
+    if (!store) {
+      throw new NotFoundException(`Store with id '${id}' not found`);
+    }
+    return store;
   }
 
   async remove(id: string) {
-    return await this.storeModel.findByIdAndDelete(id).exec();
+    const store = await this.storeModel.findByIdAndDelete(id).exec();
+    if (!store) {
+      throw new NotFoundException(`Store with id '${id}' not found`);
+    }
+    return store;
   }
 }
