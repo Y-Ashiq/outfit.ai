@@ -21,31 +21,31 @@ export class ItemsService {
   ) {}
 
   async create(file: Express.Multer.File, body: CreateItemDto) {
-    const isExist = await this.storeModel
-    .findById(body.store)
-    .exec();
-    
+    const isExist = await this.storeModel.findById(body.store).exec();
+
     if (!isExist) {
       throw new NotFoundException(`Store with id '${body.store}' not found`);
     }
-    
+
     const imgURl = await imagekit.upload({
       file: file.buffer,
       fileName: file.originalname,
     });
-    
+
     const imgDesc = await this.openai.outfitDescription(imgURl.url);
-    
+
     if (imgDesc === 'no outfit detected.') {
       body.embedding = [0];
-    }
-    const embedded = await this.openai.getEmbedding(imgDesc);
-    body.imageUrls = imgURl.url;
-    body.embedding = embedded;
-    body.description = imgDesc;
-    body.store = new Types.ObjectId(body.store);
+      return 'no outfit detected.';
+    } else {
+      const embedded = await this.openai.getEmbedding(imgDesc);
+      body.imageUrls = imgURl.url;
+      body.embedding = embedded;
+      body.description = imgDesc;
+      body.store = new Types.ObjectId(body.store);
 
-    return await this.itemModel.create(body);
+      return await this.itemModel.create(body);
+    }
   }
 
   async searchSimilarItems(file: Express.Multer.File) {
@@ -62,12 +62,16 @@ export class ItemsService {
     let imgDesc = '';
     try {
       imgDesc = await this.openai.outfitDescription(imgURl.url);
+      console.log(imgDesc);
+
+      if (imgDesc === 'No outfit detected.') {
+        return 'No outfit detected.';
+      }
     } catch (err) {
       console.error('OpenAI description failed:', err);
       imgDesc = 'No description available';
     }
     const embedded = await this.openai.getEmbedding(imgDesc);
-    console.log(imgDesc);
 
     const results = await db
       .collection('items')
