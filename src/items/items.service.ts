@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { OpenaiService } from 'src/openai/openai.service';
 import { imagekit } from 'src/configs/imagekit.config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Item } from 'src/schemas/item.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { MongoDbService } from 'src/mongo-db/mongo-db.service';
+import { Store } from 'src/schemas/store.schema';
 // import * as fs from 'fs';
 // import * as path from 'path';
 
@@ -15,20 +16,34 @@ export class ItemsService {
   constructor(
     private readonly openai: OpenaiService,
     @InjectModel(Item.name) private itemModel: Model<Item>,
+    @InjectModel(Store.name) private storeModel: Model<Store>,
     private readonly mongoService: MongoDbService,
   ) {}
 
   async create(file: Express.Multer.File, body: CreateItemDto) {
+    const isExist = await this.storeModel
+    .findById(body.store)
+    .exec();
+    
+    if (!isExist) {
+      throw new NotFoundException(`Store with id '${body.store}' not found`);
+    }
+    
     const imgURl = await imagekit.upload({
       file: file.buffer,
       fileName: file.originalname,
     });
-
+    
     const imgDesc = await this.openai.outfitDescription(imgURl.url);
+    
+    if (imgDesc === 'no outfit detected.') {
+      body.embedding = [0];
+    }
     const embedded = await this.openai.getEmbedding(imgDesc);
     body.imageUrls = imgURl.url;
     body.embedding = embedded;
     body.description = imgDesc;
+    body.store = new Types.ObjectId(body.store);
 
     return await this.itemModel.create(body);
   }
@@ -88,15 +103,23 @@ export class ItemsService {
   }
 
   findAll() {
-    return this.itemModel.find().populate('store').exec();
+    return this.itemModel.find().populate('store').select('-embedding').exec();
   }
 
   findOne(id: string) {
-    return this.itemModel.findById(id).populate('store').exec();
+    return this.itemModel
+      .findById(id)
+      .populate('store')
+      .select('-embedding')
+      .exec();
   }
 
   update(id: string, updateItemDto: UpdateItemDto) {
-    return this.itemModel.findByIdAndUpdate(id, updateItemDto, { new: true }).populate('store').exec();
+    return this.itemModel
+      .findByIdAndUpdate(id, updateItemDto, { new: true })
+      .populate('store')
+      .select('-embedding')
+      .exec();
   }
 
   remove(id: string) {

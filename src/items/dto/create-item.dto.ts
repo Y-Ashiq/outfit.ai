@@ -1,10 +1,15 @@
 import { Transform } from 'class-transformer';
-import { IsArray, IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsMongoId,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Types } from 'mongoose';
 
 export class CreateItemDto {
   @IsMongoId()
-@Transform(({ value }) => (Types.ObjectId.isValid(value) ? value : null)) // Ensure valid ObjectId
   store: Types.ObjectId;
 
   @IsOptional()
@@ -27,11 +32,10 @@ export class CreateItemDto {
   @IsString()
   imageUrls?: string;
 
-@IsOptional()
+  @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true }) // Validate each element in the array as a number
   embedding?: number[];
-  
 
   // @IsOptional()
   // @IsString()
