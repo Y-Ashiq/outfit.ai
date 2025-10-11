@@ -63,17 +63,14 @@ export class ItemsService {
     // fs.writeFileSync(tempPath, file.buffer);
 
     let imgDesc = '';
-    try {
-      imgDesc = await this.openai.outfitDescription(imgURl.url);
-      console.log(imgDesc);
 
-      if (imgDesc === 'No outfit detected.') {
-        throw new NotAcceptableException('No outfit detected.');
-      }
-    } catch (err) {
-      console.error('OpenAI description failed:', err);
-      imgDesc = 'No description available';
+    imgDesc = await this.openai.outfitDescription(imgURl.url);
+    console.log(imgDesc);
+
+    if (imgDesc === 'No outfit detected.') {
+      throw new NotAcceptableException('No outfit detected.');
     }
+
     const embedded = await this.openai.getEmbedding(imgDesc);
 
     const results = await db
