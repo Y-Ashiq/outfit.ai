@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { OpenaiService } from 'src/openai/openai.service';
@@ -35,8 +39,7 @@ export class ItemsService {
     const imgDesc = await this.openai.outfitDescription(imgURl.url);
 
     if (imgDesc === 'no outfit detected.') {
-      body.embedding = [0];
-      return 'no outfit detected.';
+      throw new NotAcceptableException('No outfit detected.');
     } else {
       const embedded = await this.openai.getEmbedding(imgDesc);
       body.imageUrls = imgURl.url;
@@ -65,7 +68,7 @@ export class ItemsService {
       console.log(imgDesc);
 
       if (imgDesc === 'No outfit detected.') {
-        return 'No outfit detected.';
+        throw new NotAcceptableException('No outfit detected.');
       }
     } catch (err) {
       console.error('OpenAI description failed:', err);
