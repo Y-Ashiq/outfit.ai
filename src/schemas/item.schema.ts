@@ -18,7 +18,7 @@ export class Item {
 
   @Prop()
   price?: number;
-
+  
   @Prop({ type: String })
   imageUrls?: string; 
 
