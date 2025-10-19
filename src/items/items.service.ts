@@ -24,7 +24,7 @@ export class ItemsService {
     private readonly mongoService: MongoDbService,
   ) {}
 
-  async create(file: Express.Multer.File, body: CreateItemDto) {
+  async create(file: { buffer: Buffer; originalname: string }, body: CreateItemDto) {
     const isExist = await this.storeModel.findById(body.store).exec();
 
     if (!isExist) {
@@ -51,7 +51,7 @@ export class ItemsService {
     }
   }
 
-  async searchSimilarItems(file: Express.Multer.File) {
+  async searchSimilarItems(file: { buffer: Buffer; originalname: string }) {
     const imgURl = await imagekit.upload({
       file: file.buffer,
       fileName: file.originalname,
