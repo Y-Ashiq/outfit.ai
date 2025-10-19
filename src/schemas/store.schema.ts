@@ -8,6 +8,7 @@ export class Store {
 
   @Prop([{ type: Object }])
   links?: { type: string; url: string }[];
+  
   @Prop({
     type: String,
     enum: ['pending', 'approved', 'rejected'],

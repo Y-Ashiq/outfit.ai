@@ -7,13 +7,13 @@ export class User {
   email: string;
 
   @Prop({ required: true })
-  passwordHash: string; 
+  password: string; 
 
   @Prop({ type: String, enum: ['customer', 'admin', 'owner'], default:"customer" })
   role: String;
 
   @Prop()
-  name?: string;
+  userName: string;
 
   @Prop({ default: false })
   emailVerified?: boolean;

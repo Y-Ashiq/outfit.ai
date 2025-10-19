@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import OpenAI from 'openai';
+import { openai } from 'src/configs/openAI.config';
 
 @Injectable()
 export class OpenaiService {
-  private openai = new OpenAI({
-    apiKey: process.env.OPENAI_KEY,
-  });
+
 
   async outfitDescription(url: string) {
     const prompt: String = `Generate a short, structured description of the visible outfit, including:
@@ -16,7 +14,7 @@ export class OpenaiService {
       If no outfit is visible, respond with exactly: "No outfit detected."
       Do not mention people, faces, background, or accessories.`;
 
-    const response = await this.openai.responses.create({
+    const response = await openai.responses.create({
       model: 'gpt-4.1-mini',
       input: [
         {
@@ -39,7 +37,7 @@ export class OpenaiService {
   }
 
   async getEmbedding(text: string) {
-    const results = await this.openai.embeddings.create({
+    const results = await openai.embeddings.create({
       model: 'text-embedding-3-small',
       input: text,
       encoding_format: 'float',

@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { OpenaiService } from 'src/openai/openai.service';
+import { OpenaiService } from 'src/services/openai/openai.service';
 import { imagekit } from 'src/configs/imagekit.config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Item } from 'src/schemas/item.schema';
 import { Model, Types } from 'mongoose';
-import { MongoDbService } from 'src/mongo-db/mongo-db.service';
+import { MongoDbService } from 'src/services/mongo-db/mongo-db.service';
 import { Store } from 'src/schemas/store.schema';
 // import * as fs from 'fs';
 // import * as path from 'path';
